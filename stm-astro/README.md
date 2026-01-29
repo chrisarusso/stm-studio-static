@@ -54,6 +54,35 @@ To fully convert to Astro components:
 
 This allows incremental migration while keeping the site functional.
 
+## E2E Tests (Form Verification)
+
+Tests verify the HubSpot contact form works and notification emails are received.
+
+```bash
+# Install dependencies
+cd tests/e2e
+pip install -r requirements.txt
+playwright install chromium
+
+# Run tests
+pytest test_contact_form.py -v
+
+# Run with visible browser
+pytest test_contact_form.py -v --headed
+
+# Skip email verification
+VERIFY_EMAIL=false pytest test_contact_form.py -v
+
+# Manual test with browser
+python test_contact_form.py
+```
+
+**Requirements:**
+- Gmail API credentials (reuses savaslabs.com-website/tests/e2e/credentials.json)
+- HubSpot form notification configured to send to 987car@gmail.com
+
+---
+
 ## TODO: Google Analytics
 
 Currently, Google Analytics (`G-0Z29ZWLNB4`) is hardcoded in each HTML file's `<head>`.
