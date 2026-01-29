@@ -1,0 +1,44 @@
+---
+/**
+ * Layout for blog posts / explorations.
+ * Extends Base layout with article-specific structure.
+ */
+import Base from './Base.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  pubDate?: Date;
+  type?: 'exploration' | 'thought';
+}
+
+const { title, description, pubDate, type = 'exploration' } = Astro.props;
+
+const formattedDate = pubDate ? pubDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric'
+}) : null;
+---
+
+<Base title={title} description={description}>
+  <main style="max-width: 800px; margin: 0 auto; padding: 2rem;">
+    <article>
+      <header style="margin-bottom: 2rem;">
+        <span style="text-transform: uppercase; font-size: 0.875rem; color: #666;">
+          {type}
+        </span>
+        <h1 style="margin: 0.5rem 0; font-size: 2.5rem;">{title}</h1>
+        {formattedDate && <time style="color: #666;">{formattedDate}</time>}
+      </header>
+
+      <div class="content">
+        <slot />
+      </div>
+    </article>
+
+    <footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid #eee;">
+      <a href="/">← Back to Matters Studio</a>
+    </footer>
+  </main>
+</Base>

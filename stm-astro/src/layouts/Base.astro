@@ -1,0 +1,49 @@
+---
+/**
+ * Base layout for all STM Studio pages.
+ * Includes Google Analytics, meta tags, and common structure.
+ */
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Matters is a studio seeking the most efficient means for positive impact." } = Astro.props;
+
+const GA_ID = 'G-0Z29ZWLNB4';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} | Matters Studio</title>
+  <meta name="description" content={description}>
+
+  <!-- Favicon -->
+  <link href="https://framerusercontent.com/images/4NgjyxcIUZmbNPOJ6gmzxi9ItM.png" rel="icon">
+  <link rel="apple-touch-icon" href="https://framerusercontent.com/images/0Pa9GceJ8Zd670RvnxlM6XXKBR0.png">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content={`${title} | Matters Studio`}>
+  <meta property="og:description" content={description}>
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={Astro.url}>
+
+  <!-- Google Analytics -->
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+  <script define:vars={{ GA_ID }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', GA_ID);
+  </script>
+
+  <slot name="head" />
+</head>
+<body>
+  <slot />
+</body>
+</html>

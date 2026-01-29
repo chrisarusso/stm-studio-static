@@ -12,7 +12,9 @@ src/
 │   └── explorations/   # Article pages
 ├── content/
 │   └── explorations/   # Future blog posts (Markdown)
-└── layouts/            # Shared layouts (to be created)
+├── layouts/
+│   ├── Base.astro      # Base layout with GA, meta tags
+│   └── BlogPost.astro  # Blog post layout (extends Base)
 public/
 └── robots.txt
 ```
@@ -26,10 +28,47 @@ public/
 | `npm run build`   | Build production site to `./dist/`          |
 | `npm run preview` | Preview build locally before deploying      |
 
+## Layouts
+
+### Base Layout
+All new pages should use `Base.astro` which includes:
+- Google Analytics (`G-0Z29ZWLNB4`)
+- Meta tags (title, description, Open Graph)
+- Favicon
+
+```astro
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Page Title" description="Optional description">
+  <main>
+    Your content here
+  </main>
+</Base>
+```
+
+### BlogPost Layout
+For explorations and thoughts:
+
+```astro
+---
+import BlogPost from '../layouts/BlogPost.astro';
+---
+
+<BlogPost
+  title="Your Post Title"
+  description="Brief description"
+  pubDate={new Date('2025-01-29')}
+  type="exploration"
+>
+  <p>Your content here...</p>
+</BlogPost>
+```
+
 ## Adding New Blog Posts
 
-1. Create a new `.md` file in `src/content/explorations/`
-2. Add frontmatter:
+For simple markdown posts, create in `src/content/explorations/`:
 
 ```markdown
 ---
@@ -46,13 +85,16 @@ Your content here...
 ## Migration Notes
 
 The existing HTML files from Framer are preserved as-is in `src/pages/`.
-To fully convert to Astro components:
+They have Google Analytics hardcoded inline - this is fine.
 
+For **new pages**, use the `Base.astro` or `BlogPost.astro` layouts.
+
+To convert an existing HTML page to Astro:
 1. Rename `.html` to `.astro`
-2. Extract common elements to layouts
-3. Convert static content to use content collections
+2. Wrap content with `<Base>` or `<BlogPost>` layout
+3. Remove the inline GA code (layout handles it)
 
-This allows incremental migration while keeping the site functional.
+---
 
 ## E2E Tests (Form Verification)
 
@@ -80,33 +122,3 @@ python test_contact_form.py
 **Requirements:**
 - Gmail API credentials (reuses savaslabs.com-website/tests/e2e/credentials.json)
 - HubSpot form notification configured to send to 987car@gmail.com
-
----
-
-## TODO: Google Analytics
-
-Currently, Google Analytics (`G-0Z29ZWLNB4`) is hardcoded in each HTML file's `<head>`.
-
-When converting to proper Astro layouts, centralize this:
-
-1. Create `src/layouts/Base.astro` with the gtag snippet
-2. Or use `@astrojs/partytown` for better performance (moves analytics to web worker)
-3. Consider environment-based loading (don't track in dev)
-
-Example centralized approach:
-```astro
-// src/layouts/Base.astro
----
-const GA_ID = 'G-0Z29ZWLNB4';
----
-<html>
-<head>
-  <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', '{GA_ID}');
-  </script>
-</head>
-```
