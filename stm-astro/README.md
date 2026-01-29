@@ -53,3 +53,31 @@ To fully convert to Astro components:
 3. Convert static content to use content collections
 
 This allows incremental migration while keeping the site functional.
+
+## TODO: Google Analytics
+
+Currently, Google Analytics (`G-0Z29ZWLNB4`) is hardcoded in each HTML file's `<head>`.
+
+When converting to proper Astro layouts, centralize this:
+
+1. Create `src/layouts/Base.astro` with the gtag snippet
+2. Or use `@astrojs/partytown` for better performance (moves analytics to web worker)
+3. Consider environment-based loading (don't track in dev)
+
+Example centralized approach:
+```astro
+// src/layouts/Base.astro
+---
+const GA_ID = 'G-0Z29ZWLNB4';
+---
+<html>
+<head>
+  <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', '{GA_ID}');
+  </script>
+</head>
+```
