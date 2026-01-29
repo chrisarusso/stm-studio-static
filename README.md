@@ -52,6 +52,30 @@ The current HTML files are monolithic (inline CSS/JS from Framer). For easier ma
 3. Deploy to GitHub Pages via GitHub Actions
 4. Update DNS from Framer to GitHub Pages
 
+## Design Resources
+
+- **STM Branding (Figma):** https://www.figma.com/design/QCLxZEYSwD6YNSmdj2f0hv/-STM--Branding?node-id=158-1247
+
+## HubSpot Form
+
+The Framer site uses a HubSpot form embedded via Framer component. For the static version, use this embed code:
+
+```html
+<script charset="utf-8" type="text/javascript" src="//js.hsforms.net/forms/embed/v2.js"></script>
+<script>
+  hbspt.forms.create({
+    region: "na1",
+    portalId: "21460480",
+    formId: "a324830d-d9a4-4e46-af70-61e4e1731eda"
+  });
+</script>
+```
+
+**Form details:**
+- Name: STM contact collection form
+- Fields: Email only
+- Post-submit: Thank you message
+
 ## Local Preview
 
 ```bash
@@ -68,3 +92,7 @@ python -m http.server 8000
    - Add CNAME: `chrisarusso.github.io`
 3. In GitHub repo settings, add custom domain: `stm.studio`
 4. Cancel Framer subscription
+
+## Known Issues
+
+- **Email form not working:** The static HTML has a Framer component placeholder (`hubspot_form_OLEiFDf49`) but not the actual HubSpot embed. Need to manually add the embed code above to `index.html` before DNS cutover.
