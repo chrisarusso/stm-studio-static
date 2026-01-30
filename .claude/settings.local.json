@@ -25,7 +25,8 @@
       "Bash(for page in \"philosophy\" \"explorations/the-efficient-pursuit-of-impact\")",
       "Bash(tr:*)",
       "Bash(wc -l echo \"\" echo \"Remaining script tags \\(should only be GA\\):\" grep -h '<script' src/pages/*.html src/pages/explorations/*.html)",
-      "Bash(npm run preview:*)"
+      "Bash(npm run preview:*)",
+      "WebFetch(domain:better-choose-585941.framer.app)"
     ]
   }
 }
