@@ -23,7 +23,9 @@
       "Bash(echo:*)",
       "Bash(done)",
       "Bash(for page in \"philosophy\" \"explorations/the-efficient-pursuit-of-impact\")",
-      "Bash(tr:*)"
+      "Bash(tr:*)",
+      "Bash(wc -l echo \"\" echo \"Remaining script tags \\(should only be GA\\):\" grep -h '<script' src/pages/*.html src/pages/explorations/*.html)",
+      "Bash(npm run preview:*)"
     ]
   }
 }
