@@ -26,7 +26,9 @@
       "Bash(tr:*)",
       "Bash(wc -l echo \"\" echo \"Remaining script tags \\(should only be GA\\):\" grep -h '<script' src/pages/*.html src/pages/explorations/*.html)",
       "Bash(npm run preview:*)",
-      "WebFetch(domain:better-choose-585941.framer.app)"
+      "WebFetch(domain:better-choose-585941.framer.app)",
+      "WebFetch(domain:stm.studio)",
+      "Bash(__NEW_LINE_28dc2d0fcccc5ab0__ echo \"\")"
     ]
   }
 }
